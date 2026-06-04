@@ -60,5 +60,11 @@ export default defineType({
         ],
       },
     }),
+    defineField({
+      name: 'pricing',
+      title: 'Pricing',
+      type: 'pricing',
+      validation: (Rule) => Rule.required(),
+    }),
   ],
 })

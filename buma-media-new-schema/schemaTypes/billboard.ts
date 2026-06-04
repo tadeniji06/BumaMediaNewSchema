@@ -1,5 +1,8 @@
 import {defineType, defineField} from 'sanity'
 
+import {countryOptions} from './billboardLocations'
+import CityStateInput from './CityStateInput'
+
 const displayTypeOptions = [
   {title: 'Gantry', value: 'gantry'},
   {title: 'Unipole', value: 'unipole'},
@@ -18,89 +21,21 @@ const displayTypeOptions = [
   {title: 'Landscape', value: 'landscape'},
 ]
 
-const countryOptions = [
-  {title: 'Nigeria', value: 'nigeria'},
-  {title: 'South Africa', value: 'south_africa'},
-  {title: 'Ghana', value: 'ghana'},
-  {title: 'Kenya', value: 'kenya'},
-  {title: 'Angola', value: 'angola'},
-  {title: 'Mozambique', value: 'mozambique'},
-  {title: 'Benin Republic', value: 'benin_republic'},
-  {title: "Cote d'Ivoire", value: 'cote_divoire'},
-  {title: 'Namibia', value: 'namibia'},
-  {title: 'Botswana', value: 'botswana'},
-  {title: 'Zambia', value: 'zambia'},
+const billboardSizeOptions = [
+  {title: 'Small', value: 'small'},
+  {title: 'Medium', value: 'medium'},
+  {title: 'Large', value: 'large'},
+  {title: '48 Sheet', value: '48_sheet'},
+  {title: '96 Sheet', value: '96_sheet'},
+  {title: 'Custom', value: 'custom'},
 ]
 
-const countryCityStateMap: Record<string, string[]> = {
-  nigeria: [
-    'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno',
-    'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT Abuja', 'Gombe',
-    'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Lagos',
-    'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers (Port Harcourt)',
-    'Sokoto', 'Taraba', 'Yobe', 'Zamfara',
-  ],
-  south_africa: [
-    'Eastern Cape', 'Free State', 'Gauteng', 'KwaZulu-Natal', 'Limpopo',
-    'Mpumalanga', 'North West', 'Northern Cape', 'Western Cape',
-  ],
-  ghana: [
-    'Ahafo', 'Ashanti', 'Bono', 'Bono East', 'Central', 'Eastern', 'Greater Accra',
-    'North East', 'Northern', 'Oti', 'Savannah', 'Upper East', 'Upper West',
-    'Volta', 'Western', 'Western North',
-  ],
-  kenya: [
-    'Baringo', 'Bomet', 'Bungoma', 'Busia', 'Elgeyo-Marakwet', 'Embu', 'Garissa',
-    'Homa Bay', 'Isiolo', 'Kajiado', 'Kakamega', 'Kericho', 'Kiambu', 'Kilifi',
-    'Kirinyaga', 'Kisii', 'Kisumu', 'Kitui', 'Kwale', 'Laikipia', 'Lamu', 'Machakos',
-    'Makueni', 'Mandera', 'Marsabit', 'Meru', 'Migori', 'Mombasa', 'Muranga', 'Nairobi',
-    'Nakuru', 'Nandi', 'Narok', 'Nyamira', 'Nyandarua', 'Nyeri', 'Samburu', 'Siaya',
-    'Taita-Taveta', 'Tana River', 'Tharaka-Nithi', 'Trans Nzoia', 'Turkana', 'Uasin Gishu',
-    'Vihiga', 'Wajir', 'West Pokot',
-  ],
-  angola: [
-    'Bengo', 'Benguela', 'Bie', 'Cabinda', 'Cuando Cubango', 'Cuanza Norte',
-    'Cuanza Sul', 'Cunene', 'Huambo', 'Huila', 'Luanda', 'Lunda Norte',
-    'Lunda Sul', 'Malanje', 'Moxico', 'Namibe', 'Uige', 'Zaire',
-  ],
-  mozambique: [
-    'Cabo Delgado', 'Gaza', 'Inhambane', 'Manica', 'Maputo', 'Maputo City',
-    'Nampula', 'Niassa', 'Sofala', 'Tete', 'Zambezia',
-  ],
-  benin_republic: [
-    'Alibori', 'Atacora', 'Atlantique', 'Borgou', 'Collines', 'Couffo',
-    'Donga', 'Littoral', 'Mono', 'Oueme', 'Plateau', 'Zou',
-  ],
-  cote_divoire: [
-    'Abidjan', 'Bas-Sassandra', 'Comoe', 'Denguele', 'Goh-Djiboua', 'Lacs',
-    'Lagunes', 'Montagnes', 'Sassandra-Marahoue', 'Savanes', 'Vallee du Bandama',
-    'Woroba', 'Yamoussoukro', 'Zanzan',
-  ],
-  namibia: [
-    'Erongo', 'Hardap', 'Karas', 'Kavango East', 'Kavango West', 'Khomas',
-    'Kunene', 'Ohangwena', 'Omaheke', 'Omusati', 'Oshana', 'Oshikoto',
-    'Otjozondjupa', 'Zambezi',
-  ],
-  botswana: [
-    'Central', 'Ghanzi', 'Kgalagadi', 'Kgatleng', 'Kweneng', 'North East',
-    'North West', 'South East', 'Southern',
-  ],
-  zambia: [
-    'Central', 'Copperbelt', 'Eastern', 'Luapula', 'Lusaka', 'Muchinga',
-    'Northern', 'North-Western', 'Southern', 'Western',
-  ],
-}
-
-const getCityStateOptions = (countryValue?: string) => {
-  if (!countryValue) return []
-
-  return (countryCityStateMap[countryValue] ?? []).map((location) => ({
-    title: location,
-    value: `${countryValue}:${location.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')}`,
-  }))
-}
-
-const cityStateOptions = countryOptions.flatMap((country) => getCityStateOptions(country.value))
+const availabilityOptions = [
+  {title: 'Available', value: 'available'},
+  {title: 'Booked', value: 'booked'},
+  {title: 'Reserved', value: 'reserved'},
+  {title: 'Maintenance', value: 'maintenance'},
+]
 
 export default defineType({
   name: 'billboard',
@@ -114,12 +49,43 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'images',
+      title: 'Images',
+      type: 'array',
+      of: [{type: 'image', options: {hotspot: true}}],
+    }),
+    defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+      rows: 4,
+    }),
+    defineField({
       name: 'displayType',
       title: 'Display Type',
       type: 'string',
       options: {
         list: displayTypeOptions,
       },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'billboardSize',
+      title: 'Billboard Size',
+      type: 'string',
+      options: {
+        list: billboardSizeOptions,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'availability',
+      title: 'Availability',
+      type: 'string',
+      options: {
+        list: availabilityOptions,
+      },
+      initialValue: 'available',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -135,9 +101,9 @@ export default defineType({
       name: 'cityState',
       title: 'City / State',
       type: 'string',
-      description: 'Select a city/state. Options are grouped by country prefix.',
-      options: {
-        list: cityStateOptions,
+      description: 'Select country first, then choose a city/state.',
+      components: {
+        input: CityStateInput,
       },
       validation: (Rule) =>
         Rule.required().custom((value, context) => {
@@ -149,11 +115,10 @@ export default defineType({
         }),
     }),
     defineField({
-      name: 'price',
-      title: 'Price',
-      type: 'number',
-      description: 'Cost of booking this billboard placement.',
-      validation: (Rule) => Rule.required().min(0),
+      name: 'pricing',
+      title: 'Pricing',
+      type: 'pricing',
+      validation: (Rule) => Rule.required(),
     }),
   ],
 })
