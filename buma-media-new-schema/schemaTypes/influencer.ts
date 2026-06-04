@@ -18,34 +18,72 @@ export default defineType({
       options: {hotspot: true},
     }),
     defineField({
+      name: 'postPricing',
+      title: 'Posts & Pricing',
+      type: 'array',
+      description: 'Add influencer deliverables such as Instagram Story, Reel, or TikTok Post.',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 3,
+            }),
+            defineField({
+              name: 'pricing',
+              title: 'Pricing',
+              type: 'pricing',
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: {title: 'name', subtitle: 'description'},
+            prepare: ({title, subtitle}) => ({
+              title: title || 'Post pricing',
+              subtitle: subtitle || 'No description entered',
+            }),
+          },
+        },
+      ],
+    }),
+    defineField({
       name: 'igFollowers',
       title: 'IG Followers',
-      type: 'number',
-      validation: (Rule) => Rule.integer().min(0),
+      type: 'string',
+      description: 'Supports compact values like 1.2M or 4.3K.',
     }),
     defineField({
       name: 'facebookFollowers',
       title: 'Facebook Followers',
-      type: 'number',
-      validation: (Rule) => Rule.integer().min(0),
+      type: 'string',
+      description: 'Supports compact values like 1.2M or 4.3K.',
     }),
     defineField({
       name: 'ytSubscribers',
       title: 'YouTube Subscribers',
-      type: 'number',
-      validation: (Rule) => Rule.integer().min(0),
+      type: 'string',
+      description: 'Supports compact values like 1.2M or 4.3K.',
     }),
     defineField({
       name: 'ytViews',
       title: 'YouTube Views',
-      type: 'number',
-      validation: (Rule) => Rule.integer().min(0),
+      type: 'string',
+      description: 'Supports compact values like 1.2M or 4.3K.',
     }),
     defineField({
-      name: 'tiktokViews',
-      title: 'TikTok Views',
-      type: 'number',
-      validation: (Rule) => Rule.integer().min(0),
+      name: 'tiktokFollowers',
+      title: 'TikTok Followers',
+      type: 'string',
+      description: 'Supports compact values like 1.2M or 4.3K.',
     }),
     defineField({
       name: 'category',
@@ -59,12 +97,6 @@ export default defineType({
           {title: 'Nano', value: 'nano'},
         ],
       },
-    }),
-    defineField({
-      name: 'pricing',
-      title: 'Pricing',
-      type: 'pricing',
-      validation: (Rule) => Rule.required(),
     }),
   ],
 })
