@@ -79,6 +79,12 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'billboardDimensions',
+      title: 'Billboard Size (e.g. 12ft x 24ft)',
+      type: 'string',
+      description: 'Enter the exact billboard dimensions, e.g. 24M x 14M.',
+    }),
+    defineField({
       name: 'availability',
       title: 'Availability',
       type: 'string',
