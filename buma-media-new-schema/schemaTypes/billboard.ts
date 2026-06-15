@@ -17,6 +17,12 @@ const displayTypeOptions = [
   {title: '48 Sheet', value: '48_sheet'},
   {title: '96 Sheet', value: '96_sheet'},
   {title: 'Bridge Panel', value: 'bridge_panel'},
+  {title: 'Lamp Poles', value: 'lamp_poles'},
+  {title: 'Circular', value: 'circular'},
+  {title: 'Eye catcher', value: 'eye_catcher'},
+  {title: 'Under pass pillar', value: 'under_pass_pillar'},
+  {title: 'Building branding', value: 'building_branding'},
+  {title:'Bus branding', value: 'bus_branding'},
   {title: 'Portrait', value: 'portrait'},
   {title: 'Landscape', value: 'landscape'},
 ]

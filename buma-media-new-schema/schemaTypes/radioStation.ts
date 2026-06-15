@@ -1,9 +1,30 @@
 import {defineType, defineField} from 'sanity'
 
-const timeBandOptions = [
+const beltOptions = [
   {title: 'Prime Time (AAA)', value: 'prime_time_aaa'},
   {title: 'Regular Time (AA)', value: 'regular_time_aa'},
   {title: 'Overnight (A)', value: 'overnight_a'},
+]
+
+const secondsOptions = [
+  {title: '60 Sec', value: '60_sec'},
+  {title: '45 Sec', value: '45_sec'},
+  {title: '30 Sec', value: '30_sec'},
+  {title: '15 Sec', value: '15_sec'},
+]
+
+const minutesOptions = [
+  {title: '60 Minutes', value: '60_minutes'},
+  {title: '45 Minutes', value: '45_minutes'},
+  {title: '30 Minutes', value: '30_minutes'},
+  {title: '15 Minutes', value: '15_minutes'},
+]
+
+const wordCountOptions = [
+  {title: '60 Words', value: '60_words'},
+  {title: '45 Words', value: '45_words'},
+  {title: '30 Words', value: '30_words'},
+  {title: '15 Words', value: '15_words'},
 ]
 
 export default defineType({
@@ -56,7 +77,7 @@ export default defineType({
               name: 'belt',
               title: 'Belt',
               type: 'string',
-              options: {list: timeBandOptions},
+              options: {list: beltOptions},
               validation: (Rule) => Rule.required(),
             }),
             defineField({
@@ -85,10 +106,10 @@ export default defineType({
           type: 'object',
           fields: [
             defineField({
-              name: 'timeBand',
-              title: 'Time Band',
+              name: 'duration',
+              title: 'Duration',
               type: 'string',
-              options: {list: timeBandOptions},
+              options: {list: secondsOptions},
               validation: (Rule) => Rule.required(),
             }),
             defineField({
@@ -99,7 +120,7 @@ export default defineType({
             }),
           ],
           preview: {
-            select: {title: 'timeBand', price: 'pricing.basePrice', currency: 'pricing.currency'},
+            select: {title: 'duration', price: 'pricing.basePrice', currency: 'pricing.currency'},
             prepare: ({title, price, currency}) => ({
               title: title || 'Jingles pricing',
               subtitle: price ? `${currency?.toUpperCase() ?? ''} ${price}` : 'No price entered',
@@ -117,10 +138,10 @@ export default defineType({
           type: 'object',
           fields: [
             defineField({
-              name: 'timeBand',
-              title: 'Time Band',
+              name: 'duration',
+              title: 'Duration',
               type: 'string',
-              options: {list: timeBandOptions},
+              options: {list: minutesOptions},
               validation: (Rule) => Rule.required(),
             }),
             defineField({
@@ -131,7 +152,7 @@ export default defineType({
             }),
           ],
           preview: {
-            select: {title: 'timeBand', price: 'pricing.basePrice', currency: 'pricing.currency'},
+            select: {title: 'duration', price: 'pricing.basePrice', currency: 'pricing.currency'},
             prepare: ({title, price, currency}) => ({
               title: title || 'Sponsored programme pricing',
               subtitle: price ? `${currency?.toUpperCase() ?? ''} ${price}` : 'No price entered',
@@ -149,10 +170,10 @@ export default defineType({
           type: 'object',
           fields: [
             defineField({
-              name: 'timeBand',
-              title: 'Time Band',
+              name: 'duration',
+              title: 'Duration',
               type: 'string',
-              options: {list: timeBandOptions},
+              options: {list: secondsOptions},
               validation: (Rule) => Rule.required(),
             }),
             defineField({
@@ -163,7 +184,7 @@ export default defineType({
             }),
           ],
           preview: {
-            select: {title: 'timeBand', price: 'pricing.basePrice', currency: 'pricing.currency'},
+            select: {title: 'duration', price: 'pricing.basePrice', currency: 'pricing.currency'},
             prepare: ({title, price, currency}) => ({
               title: title || 'Spot advert pricing',
               subtitle: price ? `${currency?.toUpperCase() ?? ''} ${price}` : 'No price entered',
@@ -181,10 +202,10 @@ export default defineType({
           type: 'object',
           fields: [
             defineField({
-              name: 'timeBand',
-              title: 'Time Band',
+              name: 'duration',
+              title: 'Duration',
               type: 'string',
-              options: {list: timeBandOptions},
+              options: {list: secondsOptions},
               validation: (Rule) => Rule.required(),
             }),
             defineField({
@@ -195,7 +216,7 @@ export default defineType({
             }),
           ],
           preview: {
-            select: {title: 'timeBand', price: 'pricing.basePrice', currency: 'pricing.currency'},
+            select: {title: 'duration', price: 'pricing.basePrice', currency: 'pricing.currency'},
             prepare: ({title, price, currency}) => ({
               title: title || 'Live appearance pricing',
               subtitle: price ? `${currency?.toUpperCase() ?? ''} ${price}` : 'No price entered',
@@ -213,10 +234,10 @@ export default defineType({
           type: 'object',
           fields: [
             defineField({
-              name: 'timeBand',
-              title: 'Time Band',
+              name: 'wordCount',
+              title: 'Word Count',
               type: 'string',
-              options: {list: timeBandOptions},
+              options: {list: wordCountOptions},
               validation: (Rule) => Rule.required(),
             }),
             defineField({
@@ -227,7 +248,7 @@ export default defineType({
             }),
           ],
           preview: {
-            select: {title: 'timeBand', price: 'pricing.basePrice', currency: 'pricing.currency'},
+            select: {title: 'wordCount', price: 'pricing.basePrice', currency: 'pricing.currency'},
             prepare: ({title, price, currency}) => ({
               title: title || 'Announcement pricing',
               subtitle: price ? `${currency?.toUpperCase() ?? ''} ${price}` : 'No price entered',
@@ -239,34 +260,7 @@ export default defineType({
     defineField({
       name: 'onAirHypePricing',
       title: 'On-Air Hype Pricing',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'timeBand',
-              title: 'Time Band',
-              type: 'string',
-              options: {list: timeBandOptions},
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'pricing',
-              title: 'Pricing',
-              type: 'pricing',
-              validation: (Rule) => Rule.required(),
-            }),
-          ],
-          preview: {
-            select: {title: 'timeBand', price: 'pricing.basePrice', currency: 'pricing.currency'},
-            prepare: ({title, price, currency}) => ({
-              title: title || 'On-Air hype pricing',
-              subtitle: price ? `${currency?.toUpperCase() ?? ''} ${price}` : 'No price entered',
-            }),
-          },
-        },
-      ],
+      type: 'pricing',
     }),
   ],
 })
