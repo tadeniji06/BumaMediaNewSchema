@@ -25,6 +25,9 @@ const displayTypeOptions = [
   {title:'Bus branding', value: 'bus_branding'},
   {title: 'Portrait', value: 'portrait'},
   {title: 'Landscape', value: 'landscape'},
+  {title: 'Mega board', value: 'mega_board'},
+  {title:'Static Wrap', value: 'static_wrap'},
+  {title:'Lightbox', value: 'lightbox'},
 ]
 
 const billboardSizeOptions = [
