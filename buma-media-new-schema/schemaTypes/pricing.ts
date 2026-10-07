@@ -1,11 +1,12 @@
 import {defineType, defineField} from 'sanity'
-import AutoMarkupPriceInput from './AutoMarkupPriceInput'
 
 const currencyOptions = [
-  {title: 'US Dollar (USD)', value: 'usd'},
   {title: 'Nigerian Naira (NGN)', value: 'ngn'},
+  {title: 'US Dollar (USD)', value: 'usd'},
   {title: 'Ghanaian Cedi (GHS)', value: 'ghs'},
   {title: 'Kenyan Shilling (KES)', value: 'kes'},
+  {title: 'British Pound (GBP)', value: 'gbp'},
+  {title: 'Euro (EUR)', value: 'eur'},
 ]
 
 export default defineType({
@@ -20,23 +21,28 @@ export default defineType({
       options: {
         list: currencyOptions,
       },
+      initialValue: 'ngn',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'basePrice',
-      title: 'Base Price',
+      name: 'price',
+      title: 'Price',
       type: 'number',
+      description: 'Original listing price',
       validation: (Rule) => Rule.required().min(0),
     }),
-    defineField({
-      name: 'priceWithMarkup',
-      title: 'Price With 30% Markup',
-      type: 'number',
-      readOnly: true,
-      description: 'Automatically calculated as Base Price x 1.30.',
-      components: {
-        input: AutoMarkupPriceInput,
-      },
-    }),
   ],
+  preview: {
+    select: {
+      price: 'price',
+      basePrice: 'basePrice',
+      currency: 'currency',
+    },
+    prepare({price, basePrice, currency}) {
+      const val = price ?? basePrice
+      return {
+        title: val != null ? `${(currency || 'NGN').toUpperCase()} ${Number(val).toLocaleString()}` : 'No price',
+      }
+    },
+  },
 })

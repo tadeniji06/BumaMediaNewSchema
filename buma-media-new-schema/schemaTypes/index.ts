@@ -3,7 +3,6 @@ import influencer from './influencer'
 import billboard from './billboard'
 import pricing from './pricing'
 import tvStation from './tvStation'
-import newsOutlet from './newsOutlet'
-import prAgency from './prAgency'
+import prMedia from './prMedia'
 
-export const schemaTypes = [radioStation, influencer, billboard, pricing, tvStation, newsOutlet, prAgency]
+export const schemaTypes = [tvStation, radioStation, influencer, billboard, prMedia, pricing]
